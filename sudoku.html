@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>UWU Sudoku</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap" rel="stylesheet">
+
+    <style type="text/css">
+
+      html, body {
+	    font-family: 'Orbitron', sans-serif;
+      }
+
+	  li{
+	  font-size: 1.5rem;
+	  }
+
+	  .nav-link{
+	    color: black;
+	  }
+
+	  button{
+	    color: black;
+	  }
+
+	  .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px solid rgba(0, 0, 0, 0);
+	}
+
+      table {
+        border: 2px solid #000000;
+		margin-left: auto;
+        margin-right: auto;
+      }
+
+      td {
+        border: 1px solid #000000;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      input {
+        color: #000000;
+        padding: 0;
+        border: 0;
+        text-align: center;
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+        background-color: #FFFFFF;
+        outline: none;
+      }
+
+      #cell0,  #cell1,  #cell2  { border-top:    2px solid #000000;}
+      #cell2,  #cell11, #cell20 { border-right:  2px solid #000000;}
+      #cell18, #cell19, #cell20 { border-bottom: 2px solid #000000;}
+      #cell0,  #cell9,  #cell18 { border-left:   2px solid #000000;}
+
+      #cell3,  #cell4,  #cell5  { border-top:    2px solid #000000;}
+      #cell5,  #cell14, #cell23 { border-right:  2px solid #000000;}
+      #cell21, #cell22, #cell23 { border-bottom: 2px solid #000000;}
+      #cell3,  #cell12, #cell21 { border-left:   2px solid #000000;}
+
+      #cell6,  #cell7,  #cell8  { border-top:    2px solid #000000;}
+      #cell8,  #cell17, #cell26 { border-right:  2px solid #000000;}
+      #cell24, #cell25, #cell26 { border-bottom: 2px solid #000000;}
+      #cell6,  #cell15, #cell24 { border-left:   2px solid #000000;}
+
+      #cell27, #cell28, #cell29 { border-top:    2px solid #000000;}
+      #cell29, #cell38, #cell47 { border-right:  2px solid #000000;}
+      #cell45, #cell46, #cell47 { border-bottom: 2px solid #000000;}
+      #cell27, #cell36, #cell45 { border-left:   2px solid #000000;}
+
+      #cell30, #cell31, #cell32 { border-top:    2px solid #000000;}
+      #cell32, #cell41, #cell50 { border-right:  2px solid #000000;}
+      #cell48, #cell49, #cell50 { border-bottom: 2px solid #000000;}
+      #cell30, #cell39, #cell48 { border-left:   2px solid #000000;}
+
+      #cell33, #cell34, #cell35 { border-top:    2px solid #000000;}
+      #cell35, #cell44, #cell53 { border-right:  2px solid #000000;}
+      #cell51, #cell52, #cell53 { border-bottom: 2px solid #000000;}
+      #cell33, #cell42, #cell51 { border-left:   2px solid #000000;}
+
+      #cell54, #cell55, #cell56 { border-top:    2px solid #000000;}
+      #cell56, #cell65, #cell74 { border-right:  2px solid #000000;}
+      #cell72, #cell73, #cell74 { border-bottom: 2px solid #000000;}
+      #cell54, #cell63, #cell72 { border-left:   2px solid #000000;}
+
+      #cell57, #cell58, #cell59 { border-top:    2px solid #000000;}
+      #cell59, #cell68, #cell77 { border-right:  2px solid #000000;}
+      #cell75, #cell76, #cell77 { border-bottom: 2px solid #000000;}
+      #cell57, #cell66, #cell75 { border-left:   2px solid #000000;}
+
+      #cell60, #cell61, #cell62 { border-top:    2px solid #000000;}
+      #cell62, #cell71, #cell80 { border-right:  2px solid #000000;}
+      #cell78, #cell79, #cell80 { border-bottom: 2px solid #000000;}
+      #cell60, #cell69, #cell78 { border-left:   2px solid #000000;}
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+    </style>
+	<script>
+	    function startTimer(duration, display) {
+        timer = 1200;
+
+        if(timer.length == 0){
+            alert("Please enter a value");
+        }
+		else {
+        function display( notifier, str ) {
+        document.getElementById(notifier).innerHTML = str;
+        }
+
+        function toMinuteAndSecond( x ) {
+        return Math.floor(x/60) + ":" + x%60;
+        }
+
+        function setTimer( remain, actions ) {
+        (function countdown() {
+           display("countdown", toMinuteAndSecond(remain));
+           actions[remain] && actions[remain]();
+           (remain -= 1) >= 0 && setTimeout(countdown, 1000);
+        })();
+        }
+
+        setTimer(timer, {
+         0: function score() {
+            document.getElementById('myPar').innerHTML = '';
+			document.getElementById("cell2").disabled = true;
+			document.getElementById("cell3").disabled = true;
+			document.getElementById("cell5").disabled = true;
+			document.getElementById("cell6").disabled = true;
+			document.getElementById("cell7").disabled = true;
+			document.getElementById("cell8").disabled = true;
+			document.getElementById("cell10").disabled = true;
+			document.getElementById("cell11").disabled = true;
+			document.getElementById("cell15").disabled = true;
+			document.getElementById("cell16").disabled = true;
+			document.getElementById("cell17").disabled = true;
+			document.getElementById("cell18").disabled = true;
+			document.getElementById("cell21").disabled = true;
+			document.getElementById("cell22").disabled = true;
+			document.getElementById("cell23").disabled = true;
+			document.getElementById("cell24").disabled = true;
+			document.getElementById("cell26").disabled = true;
+			document.getElementById("cell28").disabled = true;
+			document.getElementById("cell29").disabled = true;
+			document.getElementById("cell30").disabled = true;
+			document.getElementById("cell32").disabled = true;
+			document.getElementById("cell33").disabled = true;
+			document.getElementById("cell34").disabled = true;
+			document.getElementById("cell37").disabled = true;
+			document.getElementById("cell38").disabled = true;
+			document.getElementById("cell40").disabled = true;
+			document.getElementById("cell42").disabled = true;
+			document.getElementById("cell43").disabled = true;
+			document.getElementById("cell46").disabled = true;
+			document.getElementById("cell47").disabled = true;
+			document.getElementById("cell48").disabled = true;
+			document.getElementById("cell50").disabled = true;
+			document.getElementById("cell51").disabled = true;
+			document.getElementById("cell52").disabled = true;
+			document.getElementById("cell54").disabled = true;
+			document.getElementById("cell56").disabled = true;
+			document.getElementById("cell57").disabled = true;
+			document.getElementById("cell58").disabled = true;
+			document.getElementById("cell59").disabled = true;
+			document.getElementById("cell62").disabled = true;
+			document.getElementById("cell63").disabled = true;
+			document.getElementById("cell64").disabled = true;
+			document.getElementById("cell65").disabled = true;
+			document.getElementById("cell69").disabled = true;
+			document.getElementById("cell70").disabled = true;
+			document.getElementById("cell72").disabled = true;
+			document.getElementById("cell73").disabled = true;
+			document.getElementById("cell74").disabled = true;
+			document.getElementById("cell75").disabled = true;
+			document.getElementById("cell77").disabled = true;
+			document.getElementById("cell78").disabled = true;
+            
+			var input2 = document.getElementById("cell2").value;
+			if(input2 == "4"){
+            document.getElementById("cell2").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell2").style.backgroundColor="red";
+			} 
+			
+			var input3 = document.getElementById("cell3").value;
+			if(input3 == "6"){
+            document.getElementById("cell3").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell3").style.backgroundColor="red";
+			} 
+			
+			var input5 = document.getElementById("cell5").value;
+			if(input5 == "8"){
+            document.getElementById("cell5").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell5").style.backgroundColor="red";
+			}
+			
+			var input6 = document.getElementById("cell6").value;
+			if(input6 == "6"){
+            document.getElementById("cell6").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell6").style.backgroundColor="red";
+			}
+			
+			var input7 = document.getElementById("cell7").value;
+			if(input7 == "1"){
+            document.getElementById("cell7").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell7").style.backgroundColor="red";
+			}
+			
+			var input8 = document.getElementById("cell8").value;
+			if(input8 == "2"){
+            document.getElementById("cell8").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell8").style.backgroundColor="red";
+			}
+			
+			var input10 = document.getElementById("cell10").value;
+			if(input10 == "7"){
+            document.getElementById("cell10").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell10").style.backgroundColor="red";
+			}
+			
+			var input11 = document.getElementById("cell11").value;
+			if(input11 == "2"){
+            document.getElementById("cell11").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell11").style.backgroundColor="red";
+			}
+			
+			var input15 = document.getElementById("cell15").value;
+			if(input15 == "3"){
+            document.getElementById("cell15").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell15").style.backgroundColor="red";
+			}
+			
+			var input16 = document.getElementById("cell16").value;
+			if(input16 == "4"){
+            document.getElementById("cell16").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell16").style.backgroundColor="red";
+			}
+			
+			var input17 = document.getElementById("cell17").value;
+			if(input17 == "8"){
+            document.getElementById("cell17").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell17").style.backgroundColor="red";
+			}
+			
+			var input18 = document.getElementById("cell18").value;
+			if(input18 == "1"){
+            document.getElementById("cell18").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell18").style.backgroundColor="red";
+			}
+			
+			var input21 = document.getElementById("cell21").value;
+			if(input21 == "3"){
+            document.getElementById("cell21").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell21").style.backgroundColor="red";
+			}
+			
+			var input22 = document.getElementById("cell22").value;
+			if(input22 == "4"){
+            document.getElementById("cell22").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell22").style.backgroundColor="red";
+			}
+			
+			var input23 = document.getElementById("cell23").value;
+			if(input23 == "2"){
+            document.getElementById("cell23").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell23").style.backgroundColor="red";
+			}
+			
+			var input24 = document.getElementById("cell24").value;
+			if(input24 == "5"){
+            document.getElementById("cell24").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell24").style.backgroundColor="red";
+			}
+			
+			var input26 = document.getElementById("cell26").value;
+			if(input26 == "7"){
+            document.getElementById("cell26").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell26").style.backgroundColor="red";
+			}
+			
+			var input28 = document.getElementById("cell28").value;
+			if(input28 == "5"){
+            document.getElementById("cell28").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell28").style.backgroundColor="red";
+			}
+			
+			var input29 = document.getElementById("cell29").value;
+			if(input29 == "9"){
+            document.getElementById("cell29").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell29").style.backgroundColor="red";
+			}
+			
+			var input30 = document.getElementById("cell30").value;
+			if(input30 == "7"){
+            document.getElementById("cell30").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell30").style.backgroundColor="red";
+			}
+			
+			var input32 = document.getElementById("cell32").value;
+			if(input32 == "1"){
+            document.getElementById("cell32").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell32").style.backgroundColor="red";
+			}
+			
+			var input33 = document.getElementById("cell33").value;
+			if(input33 == "4"){
+            document.getElementById("cell33").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell33").style.backgroundColor="red";
+			}
+			
+			var input34 = document.getElementById("cell34").value;
+			if(input34 == "2"){
+            document.getElementById("cell34").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell34").style.backgroundColor="red";
+			}
+			
+			var input37 = document.getElementById("cell37").value;
+			if(input37 == "2"){
+            document.getElementById("cell37").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell37").style.backgroundColor="red";
+			}
+			
+			var input38 = document.getElementById("cell38").value;
+			if(input38 == "6"){
+            document.getElementById("cell38").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell38").style.backgroundColor="red";
+			}
+			
+			var input40 = document.getElementById("cell40").value;
+			if(input40 == "5"){
+            document.getElementById("cell40").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell40").style.backgroundColor="red";
+			}
+			
+			var input42 = document.getElementById("cell42").value;
+			if(input42 == "7"){
+            document.getElementById("cell42").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell42").style.backgroundColor="red";
+			}
+			
+			var input43 = document.getElementById("cell43").value;
+			if(input43 == "9"){
+            document.getElementById("cell43").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell43").style.backgroundColor="red";
+			}
+			
+			var input46 = document.getElementById("cell46").value;
+			if(input46 == "1"){
+            document.getElementById("cell46").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell46").style.backgroundColor="red";
+			}
+			
+			var input47 = document.getElementById("cell47").value;
+			if(input47 == "3"){
+            document.getElementById("cell47").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell47").style.backgroundColor="red";
+			}
+			
+			var input48 = document.getElementById("cell48").value;
+			if(input48 == "9"){
+            document.getElementById("cell48").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell48").style.backgroundColor="red";
+			}
+			
+			var input50 = document.getElementById("cell50").value;
+			if(input50 == "4"){
+            document.getElementById("cell50").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell50").style.backgroundColor="red";
+			}
+			
+			var input51 = document.getElementById("cell51").value;
+			if(input51 == "8"){
+            document.getElementById("cell51").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell51").style.backgroundColor="red";
+			}
+			
+			var input52 = document.getElementById("cell52").value;
+			if(input52 == "5"){
+            document.getElementById("cell52").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell52").style.backgroundColor="red";
+			}
+			
+			var input54 = document.getElementById("cell54").value;
+			if(input54 == "9"){
+            document.getElementById("cell54").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell54").style.backgroundColor="red";
+			}
+			
+			var input56 = document.getElementById("cell56").value;
+			if(input56 == "1"){
+            document.getElementById("cell56").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell56").style.backgroundColor="red";
+			}
+			
+			var input57 = document.getElementById("cell57").value;
+			if(input57 == "5"){
+            document.getElementById("cell57").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell57").style.backgroundColor="red";
+			}
+			
+			var input58 = document.getElementById("cell58").value;
+			if(input58 == "3"){
+            document.getElementById("cell58").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell58").style.backgroundColor="red";
+			}
+			
+			var input59 = document.getElementById("cell59").value;
+			if(input59 == "7"){
+            document.getElementById("cell59").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell59").style.backgroundColor="red";
+			}
+			
+			var input62 = document.getElementById("cell62").value;
+			if(input62 == "4"){
+            document.getElementById("cell62").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell62").style.backgroundColor="red";
+			}
+			
+			var input63 = document.getElementById("cell63").value;
+			if(input63 == "2"){
+            document.getElementById("cell63").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell63").style.backgroundColor="red";
+			}
+			
+			var input64 = document.getElementById("cell64").value;
+			if(input64 == "8"){
+            document.getElementById("cell64").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell64").style.backgroundColor="red";
+			}
+			
+			var input65 = document.getElementById("cell65").value;
+			if(input65 == "7"){
+            document.getElementById("cell65").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell65").style.backgroundColor="red";
+			}
+			
+			var input69 = document.getElementById("cell69").value;
+			if(input69 == "6"){
+            document.getElementById("cell69").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell69").style.backgroundColor="red";
+			}
+			
+			var input70 = document.getElementById("cell70").value;
+			if(input70 == "3"){
+            document.getElementById("cell70").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell70").style.backgroundColor="red";
+			}
+			
+			var input72 = document.getElementById("cell72").value;
+			if(input72 == "3"){
+            document.getElementById("cell72").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell72").style.backgroundColor="red";
+			}
+			
+			var input73 = document.getElementById("cell73").value;
+			if(input73 == "4"){
+            document.getElementById("cell73").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell73").style.backgroundColor="red";
+			}
+			
+			var input74 = document.getElementById("cell74").value;
+			if(input74 == "5"){
+            document.getElementById("cell74").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell74").style.backgroundColor="red";
+			}
+			
+			var input75 = document.getElementById("cell75").value;
+			if(input75 == "2"){
+            document.getElementById("cell75").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell75").style.backgroundColor="red";
+			}
+			
+			var input77 = document.getElementById("cell77").value;
+			if(input77 == "6"){
+            document.getElementById("cell77").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell77").style.backgroundColor="red";
+			}
+			
+			var input78 = document.getElementById("cell78").value;
+			if(input78 == "1"){
+            document.getElementById("cell78").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell78").style.backgroundColor="red";
+			}
+		
+        }
+        });
+        }
+        }
+        window.onload = function () {
+        display = document.querySelector('#time');
+        startTimer(display);
+        };
+		
+		function score() {
+            document.getElementById('myPar').innerHTML = '';
+			document.getElementById("cell2").disabled = true;
+			document.getElementById("cell3").disabled = true;
+			document.getElementById("cell5").disabled = true;
+			document.getElementById("cell6").disabled = true;
+			document.getElementById("cell7").disabled = true;
+			document.getElementById("cell8").disabled = true;
+			document.getElementById("cell10").disabled = true;
+			document.getElementById("cell11").disabled = true;
+			document.getElementById("cell15").disabled = true;
+			document.getElementById("cell16").disabled = true;
+			document.getElementById("cell17").disabled = true;
+			document.getElementById("cell18").disabled = true;
+			document.getElementById("cell21").disabled = true;
+			document.getElementById("cell22").disabled = true;
+			document.getElementById("cell23").disabled = true;
+			document.getElementById("cell24").disabled = true;
+			document.getElementById("cell26").disabled = true;
+			document.getElementById("cell28").disabled = true;
+			document.getElementById("cell29").disabled = true;
+			document.getElementById("cell30").disabled = true;
+			document.getElementById("cell32").disabled = true;
+			document.getElementById("cell33").disabled = true;
+			document.getElementById("cell34").disabled = true;
+			document.getElementById("cell37").disabled = true;
+			document.getElementById("cell38").disabled = true;
+			document.getElementById("cell40").disabled = true;
+			document.getElementById("cell42").disabled = true;
+			document.getElementById("cell43").disabled = true;
+			document.getElementById("cell46").disabled = true;
+			document.getElementById("cell47").disabled = true;
+			document.getElementById("cell48").disabled = true;
+			document.getElementById("cell50").disabled = true;
+			document.getElementById("cell51").disabled = true;
+			document.getElementById("cell52").disabled = true;
+			document.getElementById("cell54").disabled = true;
+			document.getElementById("cell56").disabled = true;
+			document.getElementById("cell57").disabled = true;
+			document.getElementById("cell58").disabled = true;
+			document.getElementById("cell59").disabled = true;
+			document.getElementById("cell62").disabled = true;
+			document.getElementById("cell63").disabled = true;
+			document.getElementById("cell64").disabled = true;
+			document.getElementById("cell65").disabled = true;
+			document.getElementById("cell69").disabled = true;
+			document.getElementById("cell70").disabled = true;
+			document.getElementById("cell72").disabled = true;
+			document.getElementById("cell73").disabled = true;
+			document.getElementById("cell74").disabled = true;
+			document.getElementById("cell75").disabled = true;
+			document.getElementById("cell77").disabled = true;
+			document.getElementById("cell78").disabled = true;
+			
+			var input2 = document.getElementById("cell2").value;
+			if(input2 == "4"){
+            document.getElementById("cell2").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell2").style.backgroundColor="red";
+			} 
+			
+			var input3 = document.getElementById("cell3").value;
+			if(input3 == "6"){
+            document.getElementById("cell3").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell3").style.backgroundColor="red";
+			} 
+			
+			var input5 = document.getElementById("cell5").value;
+			if(input5 == "8"){
+            document.getElementById("cell5").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell5").style.backgroundColor="red";
+			}
+			
+			var input6 = document.getElementById("cell6").value;
+			if(input6 == "6"){
+            document.getElementById("cell6").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell6").style.backgroundColor="red";
+			}
+			
+			var input7 = document.getElementById("cell7").value;
+			if(input7 == "1"){
+            document.getElementById("cell7").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell7").style.backgroundColor="red";
+			}
+			
+			var input8 = document.getElementById("cell8").value;
+			if(input8 == "2"){
+            document.getElementById("cell8").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell8").style.backgroundColor="red";
+			}
+			
+			var input10 = document.getElementById("cell10").value;
+			if(input10 == "7"){
+            document.getElementById("cell10").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell10").style.backgroundColor="red";
+			}
+			
+			var input11 = document.getElementById("cell11").value;
+			if(input11 == "2"){
+            document.getElementById("cell11").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell11").style.backgroundColor="red";
+			}
+			
+			var input15 = document.getElementById("cell15").value;
+			if(input15 == "3"){
+            document.getElementById("cell15").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell15").style.backgroundColor="red";
+			}
+			
+			var input16 = document.getElementById("cell16").value;
+			if(input16 == "4"){
+            document.getElementById("cell16").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell16").style.backgroundColor="red";
+			}
+			
+			var input17 = document.getElementById("cell17").value;
+			if(input17 == "8"){
+            document.getElementById("cell17").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell17").style.backgroundColor="red";
+			}
+			
+			var input18 = document.getElementById("cell18").value;
+			if(input18 == "1"){
+            document.getElementById("cell18").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell18").style.backgroundColor="red";
+			}
+			
+			var input21 = document.getElementById("cell21").value;
+			if(input21 == "3"){
+            document.getElementById("cell21").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell21").style.backgroundColor="red";
+			}
+			
+			var input22 = document.getElementById("cell22").value;
+			if(input22 == "4"){
+            document.getElementById("cell22").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell22").style.backgroundColor="red";
+			}
+			
+			var input23 = document.getElementById("cell23").value;
+			if(input23 == "2"){
+            document.getElementById("cell23").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell23").style.backgroundColor="red";
+			}
+			
+			var input24 = document.getElementById("cell24").value;
+			if(input24 == "5"){
+            document.getElementById("cell24").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell24").style.backgroundColor="red";
+			}
+			
+			var input26 = document.getElementById("cell26").value;
+			if(input26 == "7"){
+            document.getElementById("cell26").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell26").style.backgroundColor="red";
+			}
+			
+			var input28 = document.getElementById("cell28").value;
+			if(input28 == "5"){
+            document.getElementById("cell28").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell28").style.backgroundColor="red";
+			}
+			
+			var input29 = document.getElementById("cell29").value;
+			if(input29 == "9"){
+            document.getElementById("cell29").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell29").style.backgroundColor="red";
+			}
+			
+			var input30 = document.getElementById("cell30").value;
+			if(input30 == "7"){
+            document.getElementById("cell30").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell30").style.backgroundColor="red";
+			}
+			
+			var input32 = document.getElementById("cell32").value;
+			if(input32 == "1"){
+            document.getElementById("cell32").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell32").style.backgroundColor="red";
+			}
+			
+			var input33 = document.getElementById("cell33").value;
+			if(input33 == "4"){
+            document.getElementById("cell33").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell33").style.backgroundColor="red";
+			}
+			
+			var input34 = document.getElementById("cell34").value;
+			if(input34 == "2"){
+            document.getElementById("cell34").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell34").style.backgroundColor="red";
+			}
+			
+			var input37 = document.getElementById("cell37").value;
+			if(input37 == "2"){
+            document.getElementById("cell37").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell37").style.backgroundColor="red";
+			}
+			
+			var input38 = document.getElementById("cell38").value;
+			if(input38 == "6"){
+            document.getElementById("cell38").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell38").style.backgroundColor="red";
+			}
+			
+			var input40 = document.getElementById("cell40").value;
+			if(input40 == "5"){
+            document.getElementById("cell40").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell40").style.backgroundColor="red";
+			}
+			
+			var input42 = document.getElementById("cell42").value;
+			if(input42 == "7"){
+            document.getElementById("cell42").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell42").style.backgroundColor="red";
+			}
+			
+			var input43 = document.getElementById("cell43").value;
+			if(input43 == "9"){
+            document.getElementById("cell43").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell43").style.backgroundColor="red";
+			}
+			
+			var input46 = document.getElementById("cell46").value;
+			if(input46 == "1"){
+            document.getElementById("cell46").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell46").style.backgroundColor="red";
+			}
+			
+			var input47 = document.getElementById("cell47").value;
+			if(input47 == "3"){
+            document.getElementById("cell47").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell47").style.backgroundColor="red";
+			}
+			
+			var input48 = document.getElementById("cell48").value;
+			if(input48 == "9"){
+            document.getElementById("cell48").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell48").style.backgroundColor="red";
+			}
+			
+			var input50 = document.getElementById("cell50").value;
+			if(input50 == "4"){
+            document.getElementById("cell50").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell50").style.backgroundColor="red";
+			}
+			
+			var input51 = document.getElementById("cell51").value;
+			if(input51 == "8"){
+            document.getElementById("cell51").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell51").style.backgroundColor="red";
+			}
+			
+			var input52 = document.getElementById("cell52").value;
+			if(input52 == "5"){
+            document.getElementById("cell52").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell52").style.backgroundColor="red";
+			}
+			
+			var input54 = document.getElementById("cell54").value;
+			if(input54 == "9"){
+            document.getElementById("cell54").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell54").style.backgroundColor="red";
+			}
+			
+			var input56 = document.getElementById("cell56").value;
+			if(input56 == "1"){
+            document.getElementById("cell56").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell56").style.backgroundColor="red";
+			}
+			
+			var input57 = document.getElementById("cell57").value;
+			if(input57 == "5"){
+            document.getElementById("cell57").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell57").style.backgroundColor="red";
+			}
+			
+			var input58 = document.getElementById("cell58").value;
+			if(input58 == "3"){
+            document.getElementById("cell58").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell58").style.backgroundColor="red";
+			}
+			
+			var input59 = document.getElementById("cell59").value;
+			if(input59 == "7"){
+            document.getElementById("cell59").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell59").style.backgroundColor="red";
+			}
+			
+			var input62 = document.getElementById("cell62").value;
+			if(input62 == "4"){
+            document.getElementById("cell62").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell62").style.backgroundColor="red";
+			}
+			
+			var input63 = document.getElementById("cell63").value;
+			if(input63 == "2"){
+            document.getElementById("cell63").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell63").style.backgroundColor="red";
+			}
+			
+			var input64 = document.getElementById("cell64").value;
+			if(input64 == "8"){
+            document.getElementById("cell64").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell64").style.backgroundColor="red";
+			}
+			
+			var input65 = document.getElementById("cell65").value;
+			if(input65 == "7"){
+            document.getElementById("cell65").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell65").style.backgroundColor="red";
+			}
+			
+			var input69 = document.getElementById("cell69").value;
+			if(input69 == "6"){
+            document.getElementById("cell69").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell69").style.backgroundColor="red";
+			}
+			
+			var input70 = document.getElementById("cell70").value;
+			if(input70 == "3"){
+            document.getElementById("cell70").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell70").style.backgroundColor="red";
+			}
+			
+			var input72 = document.getElementById("cell72").value;
+			if(input72 == "3"){
+            document.getElementById("cell72").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell72").style.backgroundColor="red";
+			}
+			
+			var input73 = document.getElementById("cell73").value;
+			if(input73 == "4"){
+            document.getElementById("cell73").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell73").style.backgroundColor="red";
+			}
+			
+			var input74 = document.getElementById("cell74").value;
+			if(input74 == "5"){
+            document.getElementById("cell74").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell74").style.backgroundColor="red";
+			}
+			
+			var input75 = document.getElementById("cell75").value;
+			if(input75 == "2"){
+            document.getElementById("cell75").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell75").style.backgroundColor="red";
+			}
+			
+			var input77 = document.getElementById("cell77").value;
+			if(input77 == "6"){
+            document.getElementById("cell77").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell77").style.backgroundColor="red";
+			}
+			
+			var input78 = document.getElementById("cell78").value;
+			if(input78 == "1"){
+            document.getElementById("cell78").style.backgroundColor="green";
+			}
+			else{
+			document.getElementById("cell78").style.backgroundColor="red";
+			}
+			
+			return;
+			}
+
+        function sub(){
+            return false;
+        }
+    </script>
+  </head>
+  <body>
+	 
+    <div class="container">
+
+	  <br>
+	  <h1 class="text-center">UWU Sudoku</h1>
+	  <div class="text-center">Time remaining: <span id="countdown"></span></div>
+
+	  <div class="row">
+	  <br>
+      <div class="col-sm-6">
+	  <br>
+	  <div class="container">&nbsp;&nbsp;FACTS: </div><br>
+      <ol class="navbar-nav ml-auto">
+      <li class="nav-item">
+		What number asteroid is Kalypso named as?
+	  </li><br><br>
+	  <li class="nav-item">
+		In what year did rockets become capable of reaching beyond the boundary of space or 100 kilometers or The Kármán line?
+	  </li><br><br><br>
+	  <li class="nav-item">
+		What number is the largest black hole measured to date named as; TON __?
+	  </li><br><br><br>
+	  <li class="nav-item">
+		What year did the first woman go to space, Valentina Tereshkova in spaceship Vostok 6?
+	  </li><br><br><br>
+	  <li class="nav-item">
+		What number is the emission nebula that is a portion of the Heart Nebula named as; NGC __?
+	  </li><br><br><br>
+	  <li class="nav-item">
+		What number is the smallest and the first near-Earth-size planet to date discovered orbiting in the habitable zone; Kepler-__b?<br><br>
+	  </li>
+	  </ol>
+	  <div class="center">
+      
+	  <div id="myPar">
+	  <button class="btn btn-secondary" onclick="score()">SUBMIT</button>&nbsp;&nbsp;&nbsp;
+	  </div>
+	  <button class="btn btn-secondary"><a class="nav-link" href="index.html">HOME</a></button>
+	  </div>
+    </div>
+	  <div class="col-sm-6"><br>
+	  <table id="grid">
+
+        <tr>
+          <td><input id="cell0"  type="text" value="5" disabled></td>
+          <td><input id="cell1"  type="text" value="3" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell2" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell3" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell4"  type="text" value="7" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell5" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell6" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell7" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell8" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+        </tr>
+
+        <tr>
+          <td><input id="cell9"  type="text" value="6" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell10" name="celltwo" min="1" max="9" style="fontsize: 1.5rem;"></form></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell11" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><input id="cell12" type="text" value="1" disabled></td>
+          <td><input id="cell13" type="text" value="9" disabled></td>
+          <td><input id="cell14" type="text" value="5" disabled></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell15" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell16" name="celltwo" min="1" max="9" style="fontsize: 1.5rem;"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell17" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+        </tr>
+
+        <tr>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell18" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell19" type="text" value="9" disabled></td>
+          <td><input id="cell20" type="text" value="8" disabled></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell21" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell22" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell23" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell24" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell25" type="text" value="6" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell26" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+        </tr>
+
+        <tr>
+          <td><input id="cell27" type="text" value="8" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell28" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell29" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell30" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell31" type="text" value="6" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell32" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell33" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell34" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell35" type="text" value="3" disabled></td>
+        </tr>
+
+        <tr>
+          <td><input id="cell36" type="text" value="4" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell37" name="celltwo" min="1" max="9" style="fontsize: 1.5rem;"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell38" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><input id="cell39" type="text" value="8" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell40" name="celltwo" min="1" max="9" style="fontsize: 1.5rem;"></form></td>
+          <td><input id="cell41" type="text" value="3" disabled></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell42" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell43" name="celltwo" min="1" max="9" style="fontsize: 1.5rem;"></form></td>
+          <td><input id="cell44" type="text" value="1" disabled></td>
+        </tr>
+
+        <tr>
+          <td><input id="cell45" type="text" value="7" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell46" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell47" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell48" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell49" type="text" value="2" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell50" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell51" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell52" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell53" type="text" value="6" disabled></td>
+        </tr>
+
+        <tr>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell54" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell55" type="text" value="6" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell56" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell57" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell58" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell59" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><input id="cell60" type="text" value="2" disabled></td>
+          <td><input id="cell61" type="text" value="8" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell62" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+        </tr>
+
+        <tr>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell63" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell64" name="celltwo" min="1" max="9" style="fontsize: 1.5rem;"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell65" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><input id="cell66" type="text" value="4" disabled></td>
+          <td><input id="cell67" type="text" value="1" disabled></td>
+          <td><input id="cell68" type="text" value="9" disabled></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell69" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell70" name="celltwo" min="1" max="9" style="fontsize: 1.5rem;"></form></td>
+          <td><input id="cell71" type="text" value="5" disabled></td>
+        </tr>
+
+        <tr>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell72" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell73" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+		  <td><form onsubmit = "return sub();"><input type="number" id="cell74" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell75" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell76" type="text" value="8" disabled></td>
+          <td><form onsubmit = "return sub();"><input type="number" id="cell77" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+
+          <td><form onsubmit = "return sub();"><input type="number" id="cell78" name="celltwo" min="1" max="9" class="1.5rem"></form></td>
+          <td><input id="cell79" type="text" value="7" disabled></td>
+          <td><input id="cell80" type="text" value="9" disabled></td>
+        </tr>
+
+      </table>
+	  </div>
+	</div>
+	</div>
+
+  </body>
+</html>
