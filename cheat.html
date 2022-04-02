@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SudokUwU</title>
+    <title>Sudoku</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +28,13 @@
 
 	  button{
 	    color: black;
+		border: none;
+		border-radius: 0.3em;
+		padding: 7px;
+	  }
+	  
+	  button:hover{
+	  color: #4D4D4D;
 	  }
 
 	  .center {
@@ -38,30 +45,30 @@
 	}
 
       table {
-        border: 2px solid #000000;
-		margin-left: auto;
-        margin-right: auto;
-      }
+  border-collapse: collapse;
+  border: 2px solid #000000;
+}
+td {
+border: 1px solid #000000;
+  position: relative;
+}
+input {
+  border:0;
+  padding: 0;
+  height: 48px;
+  width: 48px;
+  font-size: 1.5rem;
+  outline: none;
+  text-align:center;
+}
+span {
+  position: absolute;
+  top: 1px;;
+  left: 3px;
+  font-size: 10px;
+}
 
-      td {
-        border: 1px solid #000000;
-        text-align: center;
-        vertical-align: middle;
-      }
-
-      input {
-        color: #000000;
-        padding: 0;
-        border: 0;
-        text-align: center;
-        width: 48px;
-        height: 48px;
-        font-size: 1.5rem;
-        background-color: #FFFFFF;
-        outline: none;
-      }
-
-      #cell0,  #cell1,  #cell2  { border-top:    2px solid #000000;}
+     #cell0,  #cell1,  #cell2  { border-top:    2px solid #000000;}
       #cell2,  #cell11, #cell20 { border-right:  2px solid #000000;}
       #cell18, #cell19, #cell20 { border-bottom: 2px solid #000000;}
       #cell0,  #cell9,  #cell18 { border-left:   2px solid #000000;}
@@ -105,6 +112,11 @@
       #cell62, #cell71, #cell80 { border-right:  2px solid #000000;}
       #cell78, #cell79, #cell80 { border-bottom: 2px solid #000000;}
       #cell60, #cell69, #cell78 { border-left:   2px solid #000000;}
+	  
+	  
+	  #cell9, #cell12, #cell13, #cell14, #cell15, #cell18, #cell20, #cell27, #cell29, #cell38, #cell40, 
+	  #cell41, #cell67, #cell68, #cell69, #cell70, #cell73, #cell74, #cell75 { background-color: #BFBEBE; }
+	  
     </style>
   </head>
   <body>
@@ -112,7 +124,7 @@
     <div class="container">
 
 	  <br>
-	  <h1 class="text-center">SudokUwU</h1>
+	  <h1 class="text-center">Sudoku</h1>
 
 	  <div class="row">
 	  <br>
@@ -127,153 +139,154 @@
 		In what year did rockets become capable of reaching beyond the boundary of space or 100 kilometers or The Kármán line?
 	  </li><br><br><br>
 	  <li class="nav-item">
-		What number is the largest black hole measured to date named as; TON __?
-	  </li><br><br>
+		What number is the largest black hole measured to date named as; TON 6_8?
+	  </li><br><br><br>
 	  <li class="nav-item">
 		What year did the first woman go to space, Valentina Tereshkova in spaceship Vostok 6?
 	  </li><br><br><br>
 	  <li class="nav-item">
-		What number is the emission nebula that is a portion of the Heart Nebula named as; NGC __?
+		What number is the emission nebula that is a portion of the Heart Nebula named as; NGC 8__?
 	  </li><br><br><br>
 	  <li class="nav-item">
-		What number is the smallest and the first near-Earth-size planet to date discovered orbiting in the habitable zone; Kepler-__b?<br><br>
+		What number is the smallest and the first near-Earth-size planet to date discovered orbiting in the habitable zone; Kepler-___b?<br><br>
 	  </li>
 	  </ol>
 	  <div class="center">
-	  <button class="btn btn-secondary"><a class="nav-link" href="index.html">HOME</a></button>
+	  <form action="index.html"><button>HOME</button></form>
 	  </div>
     </div>
-	  <div class="col-sm-6"><br>
-	  <table id="grid">
+	
+	<div class="col-sm-6"><br>
+	  <table border='1'>
+  <tr>
+	
+	 <td><input id="cell0"   type="text" value="5" disabled></td>
+     <td><input id="cell1"   type="text" value="3" disabled></td>
+     <td><input id="cell2"   type="text" value="4" disabled></td>
 
-        <tr>
-          <td><input id="cell0"  type="text" value="5" disabled></td>
-          <td><input id="cell1"  type="text" value="3" disabled></td>
-          <td><input id="cell2"  type="text" value="4" disabled></td>
+     <td><input id="cell3"   type="text" value="6" disabled></td>
+     <td><input id="cell4"   type="text" value="7" disabled></td>
+     <td><input id="cell5"   type="text" value="8" disabled></td>
 
-          <td><input id="cell3"  type="text" value="6" disabled></td>
-          <td><input id="cell4"  type="text" value="7" disabled></td>
-          <td><input id="cell5"  type="text" value="8" disabled></td>
+     <td><input id="cell6"   type="text" value="9" disabled></td>
+	 <td><input id="cell7"   type="text" value="1" disabled></td>
+	 <td><input id="cell8"   type="text" value="2" disabled></td>
+  </tr>
+  
+  <tr>
+	 <td><span>3</span><input id="cell9"   type="text" value="6" disabled></td>
+     <td><input id="cell10"  type="text" value="7" disabled></td>
+	 <td><input id="cell11"  type="text" value="2" disabled></td>
 
-          <td><input id="cell6"  type="text" value="9" disabled></td>
-		  <td><input id="cell7"  type="text" value="1" disabled></td>
-		  <td><input id="cell8"  type="text" value="2" disabled></td>
-        </tr>
+     <td><span>2</span><input id="cell12" type="text" value="1" disabled></td>
+     <td><input id="cell13"  type="text" value="9" disabled></td>
+     <td><input id="cell14"  type="text" value="5" disabled></td>
 
-        <tr>
-          <td><input id="cell9"   type="text" value="6" disabled></td>
-          <td><input id="cell10"  type="text" value="7" disabled></td>
-		  <td><input id="cell11"  type="text" value="2" disabled></td>
+     <td><input id="cell15"  type="text" value="3" disabled></td>
+	 <td><input id="cell16"  type="text" value="4" disabled></td>
+	 <td><input id="cell17"  type="text" value="8" disabled></td>
+  </tr>
+  
+  <tr>
+     <td><input id="cell18"  type="text" value="1" disabled></td>
+     <td><input id="cell19"  type="text" value="9" disabled></td>
+     <td><span>5</span><input id="cell20" type="text" value="8" disabled></td>
 
-          <td><input id="cell12" type="text" value="1" disabled></td>
-          <td><input id="cell13" type="text" value="9" disabled></td>
-          <td><input id="cell14" type="text" value="5" disabled></td>
+     <td><input id="cell21"  type="text" value="3" disabled></td>
+	 <td><input id="cell22"  type="text" value="4" disabled></td>
+	 <td><input id="cell23"  type="text" value="2" disabled></td>
 
-          <td><input id="cell15"  type="text" value="3" disabled></td>
-		  <td><input id="cell16"  type="text" value="4" disabled></td>
-		  <td><input id="cell17"  type="text" value="8" disabled></td>
-        </tr>
-
-        <tr>
-          <td><input id="cell18" type="text" value="1" disabled></td>
-          <td><input id="cell19" type="text" value="9" disabled></td>
-          <td><input id="cell20" type="text" value="8" disabled></td>
-
-          <td><input id="cell21"  type="text" value="3" disabled></td>
-		  <td><input id="cell22"  type="text" value="4" disabled></td>
-		  <td><input id="cell23"  type="text" value="2" disabled></td>
-
-		  <td><input id="cell24"  type="text" value="5" disabled></td>
-          <td><input id="cell25"  type="text" value="6" disabled></td>
-          <td><input id="cell26"  type="text" value="7" disabled></td>
-        </tr>
-
-        <tr>
-          <td><input id="cell27" type="text" value="8" disabled></td>
-          <td><input id="cell28"  type="text" value="5" disabled></td>
-		  <td><input id="cell29"  type="text" value="9" disabled></td>
+	 <td><input id="cell24"  type="text" value="5" disabled></td>
+     <td><input id="cell25"  type="text" value="6" disabled></td>
+     <td><input id="cell26"  type="text" value="7" disabled></td>
+  </tr>
+  
+  <tr>
+     <td><input id="cell27"  type="text" value="8" disabled></td>
+     <td><input id="cell28"  type="text" value="5" disabled></td>
+	 <td><input id="cell29"  type="text" value="9" disabled></td>
 		  
-		  <td><input id="cell30"  type="text" value="7" disabled></td>
-		  <td><input id="cell31"  type="text" value="6" disabled></td>
-		  <td><input id="cell32"  type="text" value="1" disabled></td>
+	 <td><input id="cell30"  type="text" value="7" disabled></td>
+	 <td><input id="cell31"  type="text" value="6" disabled></td>
+	 <td><input id="cell32"  type="text" value="1" disabled></td>
 		  
-		  <td><input id="cell33"  type="text" value="4" disabled></td>
-		  <td><input id="cell34"  type="text" value="2" disabled></td>
-		  <td><input id="cell35"  type="text" value="3" disabled></td>
-        </tr>
+	 <td><input id="cell33"  type="text" value="4" disabled></td>
+	 <td><input id="cell34"  type="text" value="2" disabled></td>
+	 <td><input id="cell35"  type="text" value="3" disabled></td>
+  </tr>
+  
+  <tr>
+     <td><input id="cell36"  type="text" value="4" disabled></td>
+     <td><input id="cell37"  type="text" value="2" disabled></td>
+	 <td><input id="cell38"  type="text" value="6" disabled></td>
 
-        <tr>
-          <td><input id="cell36" type="text" value="4" disabled></td>
-          <td><input id="cell37"  type="text" value="2" disabled></td>
-		  <td><input id="cell38"  type="text" value="6" disabled></td>
+     <td><input id="cell39"  type="text" value="8" disabled></td>
+     <td><span>1</span><input id="cell40"  type="text" value="5" disabled></td>
+     <td><input id="cell41"  type="text" value="3" disabled></td>
 
-          <td><input id="cell39" type="text" value="8" disabled></td>
-          <td><input id="cell40"  type="text" value="5" disabled></td>
-          <td><input id="cell41" type="text" value="3" disabled></td>
+     <td><input id="cell42"  type="text" value="7" disabled></td>
+	 <td><input id="cell43"  type="text" value="9" disabled></td>
+     <td><input id="cell44"  type="text" value="1" disabled></td>
+  </tr> 
+  
+  <tr>
+	 <td><input id="cell45"  type="text" value="7" disabled></td>
+     <td><input id="cell46"  type="text" value="1" disabled></td>
+	 <td><input id="cell47"  type="text" value="3" disabled></td>
 
-          <td><input id="cell42"  type="text" value="7" disabled></td>
-		  <td><input id="cell43"  type="text" value="9" disabled></td>
-          <td><input id="cell44" type="text" value="1" disabled></td>
-        </tr>
-
-        <tr>
-          <td><input id="cell45" type="text" value="7" disabled></td>
-          <td><input id="cell46"  type="text" value="1" disabled></td>
-		  <td><input id="cell47"  type="text" value="3" disabled></td>
-
-          <td><input id="cell48"  type="text" value="9" disabled></td>
-		  <td><input id="cell49"  type="text" value="2" disabled></td>
-		  <td><input id="cell50"  type="text" value="4" disabled></td>
+     <td><input id="cell48"  type="text" value="9" disabled></td>
+	 <td><input id="cell49"  type="text" value="2" disabled></td>
+	 <td><input id="cell50"  type="text" value="4" disabled></td>
 		  
-		  <td><input id="cell51"  type="text" value="8" disabled></td>
-		  <td><input id="cell52"  type="text" value="5" disabled></td>
-          <td><input id="cell53" type="text" value="6" disabled></td>
-        </tr>
+	 <td><input id="cell51"  type="text" value="8" disabled></td>
+	 <td><input id="cell52"  type="text" value="5" disabled></td>
+     <td><input id="cell53"  type="text" value="6" disabled></td>
+  </tr>
+  
+  <tr>
+     <td><input id="cell54"  type="text" value="9" disabled></td>
+     <td><input id="cell55"  type="text" value="6" disabled></td>
+     <td><input id="cell56"  type="text" value="1" disabled></td>
 
-        <tr>
-          <td><input id="cell54"  type="text" value="9" disabled></td>
-          <td><input id="cell55" type="text" value="6" disabled></td>
-          <td><input id="cell56"  type="text" value="1" disabled></td>
+     <td><input id="cell57"  type="text" value="5" disabled></td>
+	 <td><input id="cell58"  type="text" value="3" disabled></td>
+	 <td><input id="cell59"  type="text" value="7" disabled></td>
 
-          <td><input id="cell57"  type="text" value="5" disabled></td>
-		  <td><input id="cell58"  type="text" value="3" disabled></td>
-		  <td><input id="cell59"  type="text" value="7" disabled></td>
+     <td><input id="cell60"  type="text" value="2" disabled></td>
+     <td><input id="cell61" type="text" value="8" disabled></td>
+     <td><input id="cell62"  type="text" value="4" disabled></td>
+  </tr>
+  
+  <tr>
+     <td><input id="cell63"  type="text" value="2" disabled></td>
+	 <td><input id="cell64"  type="text" value="8" disabled></td>
+	 <td><input id="cell65"  type="text" value="7" disabled></td>
 
-          <td><input id="cell60" type="text" value="2" disabled></td>
-          <td><input id="cell61" type="text" value="8" disabled></td>
-          <td><input id="cell62"  type="text" value="4" disabled></td>
-        </tr>
+     <td><input id="cell66" type="text" value="4" disabled></td>
+     <td><span>4</span><input id="cell67" type="text" value="1" disabled></td>
+     <td><input id="cell68" type="text" value="9" disabled></td>
 
-        <tr>
-          <td><input id="cell63"  type="text" value="2" disabled></td>
-		  <td><input id="cell64"  type="text" value="8" disabled></td>
-		  <td><input id="cell65"  type="text" value="7" disabled></td>
+     <td><input id="cell69"  type="text" value="6" disabled></td>
+ 	 <td><input id="cell70"  type="text" value="3" disabled></td>
+     <td><input id="cell71" type="text" value="5" disabled></td>
+  </tr>
+  
+  <tr>
+     <td><input id="cell72"  type="text" value="3" disabled></td>
+	 <td><span>6</span><input id="cell73"  type="text" value="4" disabled></td>
+	 <td><input id="cell74"  type="text" value="5" disabled></td>
 
-          <td><input id="cell66" type="text" value="4" disabled></td>
-          <td><input id="cell67" type="text" value="1" disabled></td>
-          <td><input id="cell68" type="text" value="9" disabled></td>
+     <td><input id="cell75"  type="text" value="2" disabled></td>
+     <td><input id="cell76" type="text" value="8" disabled></td>
+     <td><input id="cell77"  type="text" value="6" disabled></td>
 
-          <td><input id="cell69"  type="text" value="6" disabled></td>
-		  <td><input id="cell70"  type="text" value="3" disabled></td>
-          <td><input id="cell71" type="text" value="5" disabled></td>
-        </tr>
-
-        <tr>
-          <td><input id="cell72"  type="text" value="3" disabled></td>
-		  <td><input id="cell73"  type="text" value="4" disabled></td>
-		  <td><input id="cell74"  type="text" value="5" disabled></td>
-
-          <td><input id="cell75"  type="text" value="2" disabled></td>
-          <td><input id="cell76" type="text" value="8" disabled></td>
-          <td><input id="cell77"  type="text" value="6" disabled></td>
-
-          <td><input id="cell78"  type="text" value="1" disabled></td>
-          <td><input id="cell79" type="text" value="7" disabled></td>
-          <td><input id="cell80" type="text" value="9" disabled></td>
-        </tr>
-
-      </table>
-	  </div>
+     <td><input id="cell78"  type="text" value="1" disabled></td>
+     <td><input id="cell79" type="text" value="7" disabled></td>
+     <td><input id="cell80" type="text" value="9" disabled></td>
+  </tr>
+  
+	</table>
+	</div>
 	</div>
 	</div>
 
