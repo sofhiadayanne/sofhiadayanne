@@ -3,10 +3,10 @@
 <html lang="en">
 
 <head>
-    <title>SudokUwU 2</title>
+    <title>SudokUwU</title>
 	<link rel="icon" href="logo.png">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,30 +17,42 @@
 	font-family: 'Orbitron', sans-serif;
 	font-size: 2rem;
 	color: white;
-	position: fixed;
+	position: relative;
    }
    
-   #video{
-     position: relative;
-	 width: 100%;
-	 height: 100%;
+   #bgvid{
+     position: fixed;
+	 min-width: 100%;
+	 min-height: 100%;
+	 right: 0;
+	 bottom: 0; 
 	 background-color: rgba(0, 0, 0, 0.2)
-	 background-position: center;
-	 background-repeat: no-repeat;
-	 background-size: cover;
-	 
    }
+   
    
    .content{
-     position: absolute;
+	 width: 100%;
+     position: fixed;
 	 top: 10%;
 	 width: 100%;
 	}
 	
+   form {
+	 display: inline;
+     color: #337AB7;
+   }
+   
+   form:hover {
+   color: #23527C;
+   }
+   
    p{
 	   font-size: 15px;
 	}
+	
+	
 </style>
+</head>
 
 <body>
 	<div id="video">
@@ -54,17 +66,18 @@
     <h1 class="text-center">SudokUwU</h1>
 	    <h4 class="text-center">A Sudoku X Crossword Game</h4>
 	<br>
-	<p class="text-center">In honor of the first human space flight in history or "The International Day of Human Space Flight" on April 12, we decided to make this game space-themed! We added a few cool space and space flight facts along with the sudoku puzzle so that we can appreciate how far us humans have gone in cosmic technology.</p>
+	<p class="text-center">In honor of the first human space flight in history or "The International Day of Human Space Flight" on April 12, we decided to make this game space-themed! 
+	We added a few cool space and space flight facts along with the sudoku puzzle so that we can appreciate how far us humans have gone in cosmic technology.</p>
 	<br>
 	
 		<div class="text-center">
-		        <a class="nav-link" href="sudoku.html"><button>Start</button></a>
+				<form action="sudoku.html"><button>Start</button></form>
 				<br><br>
-		        <a class="nav-link" href="how.html"><button>How to Play</button></a>
+		        <form action="how.html"><button>How to Play</button></form>
 				<br><br>
-		        <a class="nav-link" href="about.html"><button>About the Authors</button></a>
+		        <form action="about.html"><button>About the Authors</button></form>
 	            <br><br>
-	     	    <a class="nav-link" href="cheat.html"><button>Cheat Code</button></a>
+	     	    <form action="cheat.html"><button>Cheat Code</button></form>
 	    </div>
 	</div>
 	</div>
